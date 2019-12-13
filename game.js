@@ -1,3 +1,7 @@
+var number_of_times_played=0;
+var MAX_NUMBER_OF_TIMES_ALLOWED=3;
+
+
 // SELECT CVS
 const cvs = document.getElementById("bird");
 const ctx = cvs.getContext("2d");
@@ -61,10 +65,14 @@ cvs.addEventListener("click", function(evt){
             
             // CHECK IF WE CLICK ON THE START BUTTON
             if(clickX >= startBtn.x && clickX <= startBtn.x + startBtn.w && clickY >= startBtn.y && clickY <= startBtn.y + startBtn.h){
-                pipes.reset();
-                bird.speedReset();
-                score.reset();
-                state.current = state.getReady;
+                if(number_of_times_played++ < MAX_NUMBER_OF_TIMES_ALLOWED){
+                    pipes.reset();
+                    bird.speedReset();
+                    score.reset();
+                    state.current = state.getReady;}
+                else{
+                    alert("You can only play this "+MAX_NUMBER_OF_TIMES_ALLOWED+" times.\n\nThank you");
+                }
             }
             break;
     }
@@ -346,6 +354,20 @@ function draw(){
     score.draw();
 }
 
+function saveToFile(data){
+    jsonString = JSON.stringify(data);
+    $.ajax({
+        url: './save_data.php',
+        data : {'jsonString':jsonString},
+        type: 'POST',
+        dataType : "json",
+        contentType: "application/json",
+        success: function (data) {
+            alert("success");                     
+        }
+    });
+}
+
 // UPDATE
 function update(){
     bird.update();
@@ -362,3 +384,5 @@ function loop(){
     requestAnimationFrame(loop);
 }
 loop();
+
+saveToFile(1);
