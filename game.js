@@ -355,15 +355,20 @@ function draw(){
 }
 
 function saveToFile(data){
+    console.log("save called");
     jsonString = JSON.stringify(data);
+    console.log(jsonString);
     $.ajax({
-        url: './save_data.php',
-        data : {'jsonString':jsonString},
+        url: 'save_data.php',
+        data : {'field1':jsonString},
         type: 'POST',
-        dataType : "json",
-        contentType: "application/json",
+        dataType : "text",
+        contentType: "application/text",
         success: function (data) {
             alert("success");                     
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("save error"+ textStatus +"  "+ errorThrown);
         }
     });
 }
@@ -385,4 +390,4 @@ function loop(){
 }
 loop();
 
-saveToFile(1);
+ saveToFile(1);
