@@ -1,4 +1,4 @@
-var number_of_times_played=0;
+var number_of_times_played=1;
 var MAX_NUMBER_OF_TIMES_ALLOWED=3;
 
 
@@ -176,7 +176,10 @@ const bird = {
                 this.y = cvs.height - fg.h - this.h/2;
                 if(state.current == state.game){
                     state.current = state.over;
+					saveToFile(score.value);
+
                     DIE.play();
+
                 }
             }
             
@@ -360,15 +363,14 @@ function saveToFile(data){
     console.log(jsonString);
     $.ajax({
         url: 'save_data.php',
-        data : {'field1':jsonString},
+        data : {'score':jsonString},
         type: 'POST',
-        dataType : "text",
-        contentType: "application/text",
         success: function (data) {
-            alert("success");                     
+            console.log("score saved successfully");                     
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("save error"+ textStatus +"  "+ errorThrown);
+            console.log("score file save error "+ textStatus +"  "+ errorThrown);
+			alert("score not saved");
         }
     });
 }
@@ -389,5 +391,3 @@ function loop(){
     requestAnimationFrame(loop);
 }
 loop();
-
- saveToFile(1);
