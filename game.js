@@ -176,10 +176,7 @@ const bird = {
                 this.y = cvs.height - fg.h - this.h/2;
                 if(state.current == state.game){
                     state.current = state.over;
-					saveToFile(score.value);
-
-                    DIE.play();
-
+					die(0);
                 }
             }
             
@@ -284,12 +281,12 @@ const pipes = {
             // TOP PIPE
             if(bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w && bird.y + bird.radius > p.y && bird.y - bird.radius < p.y + this.h){
                 state.current = state.over;
-                HIT.play();
+				die(1);
             }
             // BOTTOM PIPE
             if(bird.x + bird.radius > p.x && bird.x - bird.radius < p.x + this.w && bird.y + bird.radius > bottomPipeYPos && bird.y - bird.radius < bottomPipeYPos + this.h){
                 state.current = state.over;
-                HIT.play();
+				die(1);
             }
             
             // MOVE THE PIPES TO THE LEFT
@@ -373,6 +370,20 @@ function saveToFile(data){
 			alert("score not saved");
         }
     });
+}
+
+function die(flag)
+{
+	console.log("dead");
+	if(flag){
+		saveToFile(score.value);
+        HIT.play();
+	}
+	else{
+		saveToFile(score.value);
+        DIE.play();
+	}
+	
 }
 
 // UPDATE
