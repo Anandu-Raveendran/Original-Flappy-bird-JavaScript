@@ -45,32 +45,16 @@ if(isset($_POST["submit"]))
   $lscore = clean_text($_POST["lscore"]);
  }
  
- 
-	// FILE NAMES
-	$in  = '../ParticipantInfo.csv';
-	$out = 'output.csv';
-
-	$fpo = fopen($out, 'w');
-	if (!$fpo) die("$out BROKE");
-
-	// OPEN THE INPUT
-	$fpi = fopen($in, 'r');
-	if (!$fpi) die("$in BROKE");
-
-	$data="";
-	// READ THE INPUT
-	while (!feof($fpi))
-	{
-	   $data = fgetcsv($fpi);
-
-	   // ADD THE NEW FIELDS
-	   $data[] = $hscore;
-	   $data[] = $lscore;
-
-	}
-	   // WRITE THE OUTPUT
-   fputcsv($fpo, $data);
-
+ 	// FILE NAMES
+	$out = '../ParticipantInfo.csv';
+	$file_open = fopen($out, 'a');
+	fwrite($file_open,",");
+	fwrite($file_open,",");
+	fwrite($file_open, $hscore);
+	fwrite($file_open,",");
+	fwrite($file_open, $lscore);
+	fwrite($file_open,",");
+	fclose($file_open);
 }
 
 

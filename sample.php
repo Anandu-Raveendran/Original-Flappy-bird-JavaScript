@@ -67,20 +67,18 @@ if(isset($_POST["submit"]))
  if($error == '')
  {
   $file_open = fopen("ParticipantInfo.csv", "a");
-  $no_rows = count(file("ParticipantInfo.csv"));
-  if($no_rows > 1)
-  {
-   $no_rows = ($no_rows - 1) + 1;
-  }
-  $form_data = array(
-   'sr_no'  => $no_rows,
-   'name'  => $name,
-   'email'  => $email,
-   'age' => $age,
-   'gender' => $gender
-   
-  );
-  fputcsv($file_open, $form_data);
+  
+  fwrite("\n");
+  fwrite($file_open, $name);
+  fwrite($file_open, ",");
+  fwrite($file_open, $email);
+  fwrite($file_open, ",");
+  fwrite($file_open, $age);
+  fwrite($file_open, ",");
+  fwrite($file_open, $gender);
+  fwrite($file_open, ",");
+  fclose($file_open);
+
   $error = '<label class="text-success">Thank you </label>';
   $name = '';
   $email = '';
