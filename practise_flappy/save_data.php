@@ -1,9 +1,7 @@
 <?php
-$myfile = fopen("../ParticipantInfo.csv", "a") or die("Unable to open file!");
-$score = $_POST["score"];
-fwrite($myfile, ",");
-fwrite($myfile, $score);
-fclose($myfile);
+
+session_start();
+$_SESSION["score".$_SESSION["rounds"]++] = $_POST["score"];
 
 ?>
 

@@ -1,6 +1,6 @@
-var number_of_times_played=1;
+var rounds_played=1;
 var MAX_NUMBER_OF_TIMES_ALLOWED=5;
-
+var score_all_rounds = "0";
 
 // SELECT CVS
 const cvs = document.getElementById("bird");
@@ -65,13 +65,13 @@ cvs.addEventListener("click", function(evt){
             
             // CHECK IF WE CLICK ON THE START BUTTON
             if(clickX >= startBtn.x && clickX <= startBtn.x + startBtn.w && clickY >= startBtn.y && clickY <= startBtn.y + startBtn.h){
-                if(number_of_times_played++ < MAX_NUMBER_OF_TIMES_ALLOWED){
+                if(rounds_played++ < MAX_NUMBER_OF_TIMES_ALLOWED){
                     pipes.reset();
                     bird.speedReset();
                     score.reset();
                     state.current = state.getReady;}
                 else{
-                    alert("Thank you for playing the game . click ok to go to the next page");
+                    alert("Thank you for playing the game . click ok to go to the next page " + score_all_rounds);
                  window.location.href ="last page.php";
                 }
             }
@@ -356,15 +356,15 @@ function draw(){
 }
 
 function saveToFile(data){
-    console.log("save called");
+    
     jsonString = JSON.stringify(data);
-    console.log(jsonString);
+  //  console.log(jsonString);
     $.ajax({
         url: 'save_data.php',
-        data : {'score':jsonString},
+        data : {'score':data},
         type: 'POST',
-        success: function (data) {
-            console.log("score saved successfully");                     
+        success: function (data1) {
+            console.log("score saved successfully "+data + ", " +jsonString + ", "+data1); 
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log("score file save error "+ textStatus +"  "+ errorThrown);
@@ -377,11 +377,13 @@ function die(flag)
 {
 	console.log("dead");
 	if(flag){
-		saveToFile(score.value);
+saveToFile(score.value);
+	//	score_all_rounds = score_all_rounds+score.value;
         HIT.play();
 	}
 	else{
-		saveToFile(score.value);
+saveToFile(score.value);
+//		score_all_rounds = score_all_rounds+score.value;
         DIE.play();
 	}
 	

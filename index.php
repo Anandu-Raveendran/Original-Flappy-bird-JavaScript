@@ -62,23 +62,44 @@ if(isset($_POST["submit"]))
  {
   $gender = clean_text($_POST["gender"]);
  }
- 
- 
+
  if($error == '')
  {
-  $file_open = fopen("ParticipantInfo.csv", "a");
-  
-  fwrite("\n");
-  fwrite($file_open, $name);
-  fwrite($file_open, ",");
-  fwrite($file_open, $email);
-  fwrite($file_open, ",");
-  fwrite($file_open, $age);
-  fwrite($file_open, ",");
-  fwrite($file_open, $gender);
-  fwrite($file_open, ",");
-  fclose($file_open);
 
+	require 'config.php';
+
+	$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $database);
+	if ($mysqli->connect_errno) {
+		$error .= '<p><label class="text-danger">Failed to connect to MySQL: (' . $mysqli->connect_errno . ') " . $mysqli->connect_error</label></p>';
+	}
+
+	$sql = "INSERT INTO " . $table_name. " (`name`, `email`, `age`, `gender`) VALUES 
+							   ('$name','$email','$age','$gender');";
+							   
+	if (!$result = $mysqli->query($sql)) {
+		if($mysqli->errno == 1062)
+		{
+			$error .= '<p><label class="text-danger"> This email id already exists. Please use a differnt one. </label></p>';
+		}
+		else{
+			$error .= '<p><label class="text-danger">'.
+			'Query: ' . $sql .
+			'Errno: '. $mysqli->errno . 
+			'Error: '. $mysqli->error.
+		    '</label></p>';
+		}
+	}
+	
+ }
+ if($error == '')
+ {
+ 
+  session_destroy();
+  session_start();
+  $_SESSION['email'] = $email;
+  $_SESSION['rounds'] = 1 ;
+
+ 
   $error = '<label class="text-success">Thank you </label>';
   $name = '';
   $email = '';
@@ -91,6 +112,7 @@ $extra = 'firstpage.html';
 header("Location: http://$host$uri/$extra");
 
  }
+ 
 }
 
 ?>
@@ -102,9 +124,11 @@ header("Location: http://$host$uri/$extra");
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
  </head>
- <body>
+ <body   background="./practise_flappy/img/vista.jpg">
   <br />
   <div class="container">
+  <h1 align="center">Welcome to the Flappy Bird Game </h1>
+
    <h2 align="center">Tell Us About Yourself </h2>
    <br />
    <div class="col-md-6" style="margin:0 auto; float:none;">
