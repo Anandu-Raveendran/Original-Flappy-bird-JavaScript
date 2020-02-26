@@ -71,7 +71,6 @@ cvs.addEventListener("click", function(evt){
 					score.reset();
 					state.current = state.getReady;}
 				else{
-					alert("Thank you for playing the game . click ok to go to the next page " + score_all_rounds);
 					window.location.href ="last page.php";
 				}
 			}

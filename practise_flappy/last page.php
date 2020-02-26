@@ -6,14 +6,7 @@ $hscore = '';
 $lscore= '';
 
 session_start();
-#   $error = '<p><label class="text-danger"> '.var_dump($_SESSION).' </label></p>';
-#   $error = '<p><label class="text-danger"> '
-#   .$_SESSION['score1']. ", "
-#   .$_SESSION['score2']. ", "
-#   .$_SESSION['score3']. ", "
-#   .$_SESSION['score4']. ", "
-#   .$_SESSION['score5']. ", "
-#   .' </label></p>';
+#echo '<p><label class="text-danger"> '.var_dump($_SESSION).' </label></p>';
 
 
 function clean_text($string)
@@ -26,18 +19,6 @@ function clean_text($string)
 
 if(isset($_POST["submit"]))
 {
-	# if(empty($_POST["name"]))
-	#{
-	# $error .= '<p><label class="text-danger">Please Enter your Name</label></p>';
-	#}
-	#else
-	#{
-	# $name = clean_text($_POST["name"]);
-	# if(!preg_match("/^[a-zA-Z ]*$/",$name))
-	# {
-	#  $error .= '<p><label class="text-danger">Only letters and white space allowed</label></p>';
-	# }
-	#}
 
 	if(empty($_POST["hscore"]+ 1))
 	{
@@ -71,6 +52,7 @@ if(isset($_POST["submit"]))
 		$score3 = (int)$_SESSION['score3'];
 		$score4 = (int)$_SESSION['score4'];
 		$score5 = (int)$_SESSION['score5'];
+		$runs = $_SESSION['runs'];
 
 		$sql = "UPDATE `user_data` SET  
 			`score1` =  $score1, 
@@ -80,7 +62,7 @@ if(isset($_POST["submit"]))
 			`score5` =  $score5,
 			`highest_score_reported` = $hscore , 
 			`lowest_score_reported` = $lscore 
-			WHERE `email` = '$_SESSION[email]'";
+			WHERE `email` = '$_SESSION[email]' AND `runs` = $runs";
 
 		if (!$result = $mysqli->query($sql)) {
 			$error .= '<p><label class="text-danger">'.
@@ -88,13 +70,14 @@ if(isset($_POST["submit"]))
 				'Errno: '. $mysqli->errno . 
 				'Error: '. $mysqli->error;
 		}
+		$_SESSION['runs']++;
 
 		if($error == '')
 		{
-			session_destroy();
+			#			session_destroy();
 			$host  = $_SERVER['HTTP_HOST'];
 			$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-			$extra = 'thanks.html';
+			$extra = 'thanks.php';
 			header("Location: http://$host$uri/$extra");
 		}
 
@@ -102,6 +85,7 @@ if(isset($_POST["submit"]))
 }
 
 ?>
+
 <!DOCTYPE html>
 <html>
  <head>

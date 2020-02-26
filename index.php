@@ -6,7 +6,6 @@ $email = '';
 $age = '';
 $gender = '';
 
-
 function clean_text($string)
 {
 	$string = trim($string);
@@ -73,8 +72,8 @@ if(isset($_POST["submit"]))
 			$error .= '<p><label class="text-danger">Failed to connect to MySQL: (' . $mysqli->connect_errno . ') " . $mysqli->connect_error</label></p>';
 		}
 
-		$sql = "INSERT INTO " . $table_name. " (`name`, `email`, `age`, `gender`) VALUES 
-			('$name','$email','$age','$gender');";
+		$sql = "INSERT INTO " . $table_name. " (`name`, `email`, `runs`, `age`, `gender`) VALUES 
+			('$name','$email', 1 , '$age','$gender');";
 
 		if (!$result = $mysqli->query($sql)) {
 			if($mysqli->errno == 1062)
@@ -89,7 +88,6 @@ if(isset($_POST["submit"]))
 					'</label></p>';
 			}
 		}
-
 	}
 	if($error == '')
 	{
@@ -98,6 +96,10 @@ if(isset($_POST["submit"]))
 		session_start();
 		$_SESSION['email'] = $email;
 		$_SESSION['rounds'] = 1 ;
+		$_SESSION['runs'] = 1;
+		$_SESSION['name'] = $name;
+		$_SESSION['age'] = $age;
+		$_SESSION['gender'] = $gender;
 
 
 		$error = '<label class="text-success">Thank you </label>';

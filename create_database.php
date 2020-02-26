@@ -16,6 +16,7 @@ $sql = 'CREATE TABLE '. $table_name .'( '.
 	'uid INT NOT NULL AUTO_INCREMENT, '.
 	'name VARCHAR(30) NOT NULL, '.
 	'email  VARCHAR(50) NOT NULL, '.
+	'runs  INT NOT NULL , '.
 	'gender  VARCHAR(10) , '.
 	'age  INT , '.
 	'score1  INT , '.
@@ -25,8 +26,7 @@ $sql = 'CREATE TABLE '. $table_name .'( '.
 	'score5  INT , '.
 	'highest_score_reported  INT , '.
 	'lowest_score_reported  INT , '.
-	'primary key ( email ),'.
-	'UNIQUE (uid))';
+	'primary key ( uid ))';
 
 if (!$result = $mysqli->query($sql)) {
 	echo "\nSorry, the website is experiencing problems.";
