@@ -23,7 +23,7 @@
 			       color: #ecf0f1;
 			       transition: background-color .3s;
 			       "align = "bottom" 
-			onclick="window.location.href = 'reset_runs.php';"
+			onclick="window.location.href = 'add_run.php';"
 
 			>Play next round</button>
 
