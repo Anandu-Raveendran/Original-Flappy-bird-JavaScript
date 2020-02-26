@@ -24,7 +24,7 @@
       'score5  INT , '.
       'highest_score_reported  INT , '.
       'lowest_score_reported  INT , '.
-	    'UNIQUE (uid))';
+	    'primary key (uid))';
   
 if (!$result = $mysqli->query($sql)) {
     echo "\nSorry, the website is experiencing problems.";
