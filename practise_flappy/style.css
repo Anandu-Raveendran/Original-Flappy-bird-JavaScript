@@ -1,0 +1,68 @@
+body{
+	background-image: url(images/2.jpg);
+	background-size: 650px 650px;
+  text-align: center;
+
+
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+}
+.cent{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+.center1{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 55%;
+}
+.center2 { 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+}
+
+
+
+.box{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+ 
+}
+.box1{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+ 
+}
+.box2{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 55%;
+}
+.box5{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+}
+
+.box4{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}

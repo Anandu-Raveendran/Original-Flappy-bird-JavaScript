@@ -1,5 +1,5 @@
 var rounds_played=1;
-var MAX_NUMBER_OF_TIMES_ALLOWED=5;
+var MAX_NUMBER_OF_TIMES_ALLOWED=3;
 var score_all_rounds = "0";
 
 // SELECT CVS
@@ -71,7 +71,7 @@ cvs.addEventListener("click", function(evt){
 					score.reset();
 					state.current = state.getReady;}
 				else{
-					window.location.href ="last page.php";
+					window.location.href ="scores.html";
 				}
 			}
 			break;

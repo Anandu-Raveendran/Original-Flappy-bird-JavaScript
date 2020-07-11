@@ -1,168 +1,39 @@
 <?php
-
-$error = '';
-$name = '';
-$email = '';
-$age = '';
-$gender = '';
-
-function clean_text($string)
-{
-	$string = trim($string);
-	$string = stripslashes($string);
-	$string = htmlspecialchars($string);
-	return $string;
-}
-
-if(isset($_POST["submit"]))
-{
-	if(empty($_POST["name"]))
-	{
-		$error .= '<p><label class="text-danger">Please Enter your Name</label></p>';
-	}
-	else
-	{
-		$name = clean_text($_POST["name"]);
-		if(!preg_match("/^[a-zA-Z ]*$/",$name))
-		{
-			$error .= '<p><label class="text-danger">Only letters and white space allowed</label></p>';
-		}
-	}
-	if(empty($_POST["email"]))
-	{
-		$error .= '<p><label class="text-danger">Please Enter your Email</label></p>';
-	}
-	else
-	{
-		$email = clean_text($_POST["email"]);
-		if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-		{
-			$error .= '<p><label class="text-danger">Invalid email format</label></p>';
-		}
-	}
-	if(empty($_POST["age"]))
-	{
-		$error .= '<p><label class="text-danger"> Age is required </label></p>';
-	}
-	else
-	{
-
-		$age = clean_text($_POST["age"]); 
-		if ( $age < 18)
-		{
-			$error .= '<p><label class="text-danger">Not eligble </label></p>';
-		}
-	}
-	if(empty($_POST["gender"]))
-	{
-		$error .= '<p><label class="text-danger">Gender is required</label></p>';
-	}
-	else
-	{
-		$gender = clean_text($_POST["gender"]);
-	}
-
-	if($error == '')
-	{
-
-		require 'config.php';
-
-		$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $database);
-		if ($mysqli->connect_errno) {
-			$error .= '<p><label class="text-danger">Failed to connect to MySQL: (' . $mysqli->connect_errno . ') " . $mysqli->connect_error</label></p>';
-		}
-
-		$sql = "INSERT INTO " . $table_name. " (`name`, `email`, `runs`, `age`, `gender`) VALUES 
-			('$name','$email', 1 , '$age','$gender');";
-
-		if (!$result = $mysqli->query($sql)) {
-			if($mysqli->errno == 1062)
-			{
-				$error .= '<p><label class="text-danger"> This email id already exists. Please use a differnt one. </label></p>';
-			}
-			else{
-				$error .= '<p><label class="text-danger">'.
-					'Query: ' . $sql .
-					'Errno: '. $mysqli->errno . 
-					'Error: '. $mysqli->error.
-					'</label></p>';
-			}
-		}
-	}
-	if($error == '')
-	{
-
-		session_destroy();
-		session_start();
-		$_SESSION['email'] = $email;
-		$_SESSION['rounds'] = 1 ;
-		$_SESSION['runs'] = 1;
-		$_SESSION['name'] = $name;
-		$_SESSION['age'] = $age;
-		$_SESSION['gender'] = $gender;
-
-
-		$error = '<label class="text-success">Thank you </label>';
-		$name = '';
-		$email = '';
-		$age = '';
-		$gender = '';
-
-		$host  = $_SERVER['HTTP_HOST'];
-		$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = 'firstpage.html';
-		header("Location: http://$host$uri/$extra");
-
-	}
-
-}
+session_start();
+session_destroy();
+session_start();
+$_SESSION['page'] = "instruction.php";
 
 ?>
-<!DOCTYPE html>
 <html>
- <head>
-  <title>Contact Form</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- </head>
- <body   background="./practise_flappy/img/vista.jpg">
-  <br />
-  <div class="container">
-  <h1 align="center">Welcome to the Flappy Bird Game </h1>
+<head>
+	<title>Welcome</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 
-   <h2 align="center">Tell Us About Yourself </h2>
-   <br />
-   <div class="col-md-6" style="margin:0 auto; float:none;">
-    <form method="post">
+</head>
+<body>
+	
+	
+	<img src="https://fontmeme.com/permalink/200507/062f5a927098679ef2b27564b44f44d3.png" alt="super-mario-font" border="0" class="center"><br><br>
+	<img src=" images/qw.png" border="0" class="center1"><br><br>
+	
 
-     <br />
-     <?php echo $error; ?>
-     <div class="form-group">
-      <label>Enter Name</label>
-      <input type="text" name="name" placeholder="Enter Name" class="form-control" value="<?php echo $name; ?>" />
-     </div>
-     <div class="form-group">
-      <label>Enter Email</label>
-      <input type="text" name="email" class="form-control" placeholder="Enter Email" value="<?php echo $email; ?>" />
-     </div>
-     <div class="form-group">
-      <label>Age</label>
-      <input type="text" name="age" class="form-control" placeholder="Enter Age" value="<?php echo $age; ?>" />
-     </div>
-     <div class="form-group">
-      <label>Gender</label>
-      <input type="text" name="gender" class="form-control" placeholder="Enter Gender" value="<?php echo $gender; ?>" />
-     </div>
+	<img src="images/qwe.png" border="0" class="cent"><br><br>
+	<img src="images/as.png" border="0" class="cent"><br><br>
+	<img src="images/5.png" border="0" class="cent"><br><br>
+	<a href="instruction.php"><img src="images/4.png" border="0" class="center2"></a>
+	
+	<!--
+	<img src="images/qwe.png" border="0" class="cent">
+	<img src="images/qwe.png" border="0" class="cent">
 
-     <div class="form-group" align="center">
+	<h2>We require you to play a game and participate in a survey. The total time required is about 40 min. Please do not leave in between becuase your email adresses cannot be used again.</h2>
+	<h3>The game you will be playing is FLAPPY BIRDS, a popular 2d retro style game in which your objective is to move the bird between a set of pipes. There is no end to the game unless the bird falls due to gravity or hits the pipes.</h3>
+	<h3>Please click here <input type="button" name="Practice" value="Here" onclick="practice/index.php"> if you want to take look at the game you are playing</h3>
+	<h3></h3> 
+	<h3>The Game is divided into three parts. 1st you will play the game for two rounds. Each round consists of 20 chances. Following which you will be directed to the questionnaire. After which you will play the game for  two more rounds</h3> -->
 
+	
 
-      <input type="submit" name="submit" class="btn btn-info" value="Submit" />
-
-     </div>
-    </form>
-   </div>
-  </div>
- </body>
+</body>
 </html>

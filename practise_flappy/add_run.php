@@ -32,12 +32,13 @@ if (!$result = $mysqli->query($sql)) {
 	}
 }
 
+
 if($error == '')
 {
 	#			session_destroy();
 	$host  = $_SERVER['HTTP_HOST'];
 	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-	$extra = 'index.html';
+	$extra = 'index.php';
 	header("Location: http://$host$uri/$extra");
 }
 else
